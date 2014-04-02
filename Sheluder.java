@@ -53,6 +53,7 @@ public class Sheluder {
         int licznik;                // zmienna pomocnicza przy sprawdzaniu czy proces się wykonał
             
         if(listFifo.size()!= 0){
+
             waitingTimeFifo += listFifo.size()*procek.getClock();
             licznik = procek.przetworz(listFifo.getFirst());
             if(licznik > 0){
@@ -63,15 +64,21 @@ public class Sheluder {
             }
         }                               // wykonanie kwantu czasu procesora dla FiFo
         if(listSjf.size() != 0){
+
             waitingTimeSjf += listSjf.size()*procek.getClock();
             if(currentSjf == null){
                 licznik = procek.przetworz(listSjf.getFirst());
                 
+                    
                 if(licznik > 0){
+                    
                     currentSjf = listSjf.getFirst();
                     listSjf.remove();
                     
                     currentSjf.setLength(licznik);
+                }else{
+                    listSjf.remove();
+
                 }
             }else{
                 licznik = procek.przetworz(currentSjf);
@@ -83,29 +90,29 @@ public class Sheluder {
             }                                            // (i usuwa z listy jeśli jeszcze tam jest)
         }
         if(listSjfW.size()!= 0){
-            
+
             waitingTimeSjfW += listSjfW.size()*procek.getClock();
             licznik = procek.przetworz(listSjfW.getFirst());
             if(licznik > 0){
                 listSjfW.getFirst().setLength(licznik);
             }else{
                 listSjfW.remove();
-                                                        //wysłanie SJFW do procesora
             }
         }
-        if(listRot.size()!= 0){
+        if(listRot.size()!= 0){ 
+
             waitingTimeRot += listRot.size()*procek.getClock();
             licznik = procek.przetworz(listRot.getFirst());
             if(licznik > 0){
                 listRot.getFirst().setLength(licznik);
                 listRot.add(listRot.getFirst());
                 listRot.remove();
-            }else{
-                listRot.remove();                       // wysłanie Rotacyjnego do procesora, proces który ma wykonany kwant czasu przesuwany jest na koniec listy
                 
+            }else{
+                listRot.remove();                                       // wysłanie Rotacyjnego do procesora, proces który ma wykonany kwant czasu przesuwany jest na koniec listy
             }
         }
-        boolean anything = (listRot.size() != 0 && listSjfW.size()!= 0&& listSjf.size()!= 0&& listFifo.size()!= 0); // zmienna pomocnicza pozwalająca sprawdzić
+        boolean anything = (listRot.size() != 0 || listSjfW.size()!= 0|| listSjf.size()!= 0|| listFifo.size()!= 0); // zmienna pomocnicza pozwalająca sprawdzić
         return anything;                                                                                         //czy zostały jeszcze jakiekolwiek procesy na którejkolwiek liście
     }
     public void printTimes(int liczbaProcesow){
