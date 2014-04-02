@@ -1,4 +1,4 @@
-/**
+ /**
  * Instancje tej klasy symulują procesy przetrzymując (pozostałą) dłługość 
  * procesu oraz moment jego pojawienia się.
  * @author Piotrek
@@ -14,7 +14,7 @@ public class Proces {
      * @param time 
      */
     public Proces(int time){
-        length = (int) Math.random()*20+1;
+        length = (int) (Math.random()*20) + 1;
         czasWejscia = time;
     }
     
