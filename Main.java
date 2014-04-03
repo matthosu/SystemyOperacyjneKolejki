@@ -13,16 +13,16 @@ public class Main {
     public static void main(String[]args){
         int pomocniczaDoWyboru;
         Scanner scan = new Scanner(System.in);
-        System.out.println("wybierz sposob generowania długości procesów: \n0: hiperboliczny\n1:wykładniczy(^1/2)\n2:losowy");
-        pomocniczaDoWyboru = scan.nextInt();
-        
+        System.out.println("Podaj długość cyklu procesora");
+        Procesor worker = new Procesor(scan.nextInt());
+        System.out.println("Wybierz sposob generowania listy procesów: \n0: hiperboliczny\n1:wykładniczy(^1/2)\n2:losowy");
         ProcesListGenerator plg = new ProcesListGenerator();
         LinkedList<Proces> procesy = new LinkedList<Proces>();
         Sheluder shlud = new Sheluder();
-        Procesor worker = new Procesor(6);
-        switch(pomocniczaDoWyboru){
+        
+        switch(scan.nextInt()){
             case 0:
-                System.out.println("wybierz ilość procesów: ");
+                System.out.println("Podaj ilość procesów: ");
                 pomocniczaDoWyboru = scan.nextInt();
                 procesy = plg.hyperbolaGenerate(pomocniczaDoWyboru);
                 do{
@@ -35,7 +35,7 @@ public class Main {
                 shlud.printTimes(pomocniczaDoWyboru);
                 break;
             case 1:
-                System.out.println("wybierz ilość procesów: ");
+                System.out.println("Podaj ilość procesów: ");
                 pomocniczaDoWyboru = scan.nextInt();
                 procesy = plg.sqrtGenerate(pomocniczaDoWyboru);
                 
@@ -50,7 +50,7 @@ public class Main {
                 shlud.printTimes(pomocniczaDoWyboru);
                 break;
             case 2:
-                System.out.println("wybierz ilość procesów: ");
+                System.out.println("Podaj ilość procesów: ");
                 pomocniczaDoWyboru = scan.nextInt();
                 procesy = plg.randGenerate(pomocniczaDoWyboru);
                 do{
